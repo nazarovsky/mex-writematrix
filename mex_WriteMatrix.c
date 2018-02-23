@@ -48,12 +48,12 @@ void writemat(double *z, size_t n, size_t m, char *fname, char *fmt, char *dlm, 
          mexErrMsgIdAndTxt(FUNCNAME,"fopen() Error!");
          exit;
    }
-
+   
    for (i=0; i<m; i++) {
       for (j=0; j<n; j++) {
          if (j<n-1) {
            fprintf(fd, fmt, z[i+j*m]);
-           fprintf(fd, dlm, z[i+j*m]);	
+           fprintf(fd, dlm);
          } else {
            fprintf(fd,fmt,z[i+j*m]);	
          } 
@@ -116,7 +116,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt(FUNCNAME,"Write mode must be a char (e.g. w+ or a+)");
     }
 
-
     /* process first input = filename */
     fnamelen=mxGetN(prhs[0])+1;
     fname=(char *)mxCalloc(fnamelen,sizeof(char));
@@ -141,7 +140,6 @@ void mexFunction( int nlhs, mxArray *plhs[],
     wmodelen=mxGetN(prhs[4])+1;
     wmode=(char *)mxCalloc(wmodelen,sizeof(char));
     status=mxGetString(prhs[4],wmode,(mwSize)wmodelen);
-
 
     writemat(inMatrix,n,m,fname, fmt, dlm,wmode);
 
